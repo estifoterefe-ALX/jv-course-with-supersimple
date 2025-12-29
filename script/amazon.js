@@ -1,5 +1,6 @@
 import { products } from "../data/products.js";
 import { addToCart, totalcart } from "../data/cart.js";
+import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 const productMainContainer = document.querySelector(".products-grid");
 const cartQuantityEl = document.querySelector(".cart-quantity");
 cartQuantityEl.innerText = totalcart();
@@ -80,6 +81,7 @@ function displayProducts(product) {
       id: product.id,
       count: parseInt(select.value, 10),
       shipping: 0,
+      shippingDate: dayjs().add(5, "day").format("dddd, MMMM D"),
     });
     cartQuantityEl.innerText = totalcart();
     added.style.opacity = "1";

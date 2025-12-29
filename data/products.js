@@ -479,6 +479,9 @@ async function productAPI() {
   try {
     const response = await fetch("https://supersimplebackend.dev/products", {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     const data = await response.json();
     const product = await JSON.parse(JSON.stringify(data));
@@ -491,3 +494,5 @@ async function productAPI() {
     productMainContainer.textContent = "";
   }
 }
+
+export const productsById = Object.fromEntries(products.map((p) => [p.id, p]));

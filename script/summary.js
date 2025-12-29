@@ -1,3 +1,7 @@
+import { addOrder } from "./order-return.js";
+import { cart } from "../data/cart.js";
+import { productsById } from "../data/products.js";
+import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 export function displayPaymentSummary(summary) {
   const container = document.createElement("div");
   container.className = "payment-summary";
@@ -50,6 +54,20 @@ export function displayPaymentSummary(summary) {
   const button = document.createElement("button");
   button.className = "place-order-button button-primary";
   button.textContent = "Place your order";
+  button.addEventListener("click", () => {
+    alert("Order placed successfully!");
+    const item = cart.map((i) => ({
+      orderDate: dayjs().format("dddd, MMMM D"),
+      totalPrice: productsById[i.id].priceCents * i.count,
+      orderId: generateUUID(),
+      productId: i.id,
+      quantity: i.count,
+      arrivedAt: i.shippingDate,
+    }));
+    addOrder(item);
+    localStorage.removeItem("cart");
+    window.location.href = "amazon.html";
+  });
 
   /* Assemble */
   container.append(
@@ -63,4 +81,20 @@ export function displayPaymentSummary(summary) {
   );
 
   return container;
+}
+
+function generateUUID() {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
+  } else {
+    // Fallback for very old environments if needed
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c == "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
+  }
 }

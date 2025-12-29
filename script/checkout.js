@@ -1,11 +1,10 @@
-import { products } from "../data/products.js";
+import { productsById } from "../data/products.js";
 import { cart, countUpdater, removeFromCart, totalcart } from "../data/cart.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { displayPaymentSummary } from "./summary.js";
 
 const cartItemsContainer = document.querySelector(".order-summary");
 document.querySelector(".return-to-home-link").innerText = totalcart();
-const productsById = Object.fromEntries(products.map((p) => [p.id, p]));
 function renderCartItem(cart, index) {
   const container = document.createElement("div");
   container.className = `cart-item-container cart-container-js--${cart.id}`;
@@ -131,6 +130,7 @@ function renderCartItem(cart, index) {
     }`;
     input.addEventListener("change", () => {
       cart.shipping = opt.price;
+      cart.shippingDate = opt.date;
       summary();
     });
     //summaryData.shipping += opt.checked ? opt.price / 100 : 0;
