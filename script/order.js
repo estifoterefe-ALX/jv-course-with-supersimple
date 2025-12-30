@@ -1,6 +1,7 @@
-import { totalcart } from "../data/cart.js";
+import { addToCart, totalcart } from "../data/cart.js";
 import { orders } from "../data/order-return.js";
 import { productsById } from "../data/products.js";
+import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 document.querySelector(".cart-quantity").innerText = totalcart();
 
 function createOrder(order) {
@@ -86,6 +87,15 @@ function createOrder(order) {
     const quantity = document.createElement("div");
     quantity.className = "product-quantity";
     quantity.textContent = `Quantity: ${product.quantity}`;
+    /* Added to cart */
+    const added = document.createElement("div");
+    added.className = "added-to-cart";
+
+    const checkIcon = document.createElement("img");
+    checkIcon.src = "images/icons/checkmark.png";
+    added.style.opacity = "0";
+
+    added.append(checkIcon, " Added");
 
     const buyAgainBtn = document.createElement("button");
     buyAgainBtn.className = "buy-again-button button-primary";
@@ -97,10 +107,29 @@ function createOrder(order) {
     const buyAgainText = document.createElement("span");
     buyAgainText.className = "buy-again-message";
     buyAgainText.textContent = "Buy it again";
+    buyAgainBtn.addEventListener("click", () => {
+      addToCart({
+        id: product.productId,
+        count: parseInt(product.quantity, 10),
+        shipping: 0,
+        shippingDate: dayjs().add(5, "day").format("dddd, MMMM D"),
+      });
+      document.querySelector(".cart-quantity").innerText = totalcart();
+      added.style.opacity = "1";
+      setTimeout(() => {
+        added.style.opacity = "0";
+      }, 1000);
+    });
 
     buyAgainBtn.append(buyAgainIcon, buyAgainText);
 
-    productDetails.append(productName, deliveryDate, quantity, buyAgainBtn);
+    productDetails.append(
+      productName,
+      deliveryDate,
+      quantity,
+      added,
+      buyAgainBtn
+    );
 
     /* Actions */
     const productActions = document.createElement("div");
