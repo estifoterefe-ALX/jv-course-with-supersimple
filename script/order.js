@@ -136,7 +136,7 @@ function createOrder(order) {
     productActions.className = "product-actions";
 
     const trackLink = document.createElement("a");
-    trackLink.href = "tracking.html";
+    trackLink.href = `tracking.html?orderId=${order.orderId}`;
     trackLink.addEventListener("click", () => {
       sessionStorage.setItem(
         "trackingOrderId",
