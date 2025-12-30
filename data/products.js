@@ -471,11 +471,8 @@
 //   },
 // ];
 
-const productMainContainer = document.querySelector(".loading-message");
-
 export const products = await productAPI();
 async function productAPI() {
-  productMainContainer.textContent = "Loading products...";
   try {
     const response = await fetch("https://supersimplebackend.dev/products", {
       method: "GET",
@@ -491,7 +488,6 @@ async function productAPI() {
     return [];
   } finally {
     console.log("fetch attempt finished");
-    productMainContainer.textContent = "";
   }
 }
 

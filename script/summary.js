@@ -1,4 +1,4 @@
-import { addOrder } from "./order-return.js";
+import { addOrder } from "../data/order-return.js";
 import { cart } from "../data/cart.js";
 import { productsById } from "../data/products.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
@@ -57,16 +57,18 @@ export function displayPaymentSummary(summary) {
   button.addEventListener("click", () => {
     alert("Order placed successfully!");
     const item = cart.map((i) => ({
-      orderDate: dayjs().format("dddd, MMMM D"),
       totalPrice: productsById[i.id].priceCents * i.count,
-      orderId: generateUUID(),
       productId: i.id,
       quantity: i.count,
       arrivedAt: i.shippingDate,
     }));
-    addOrder(item);
-    localStorage.removeItem("cart");
-    window.location.href = "amazon.html";
+
+    const items = {
+      orderDate: dayjs().format("dddd, MMMM D"),
+      orderId: generateUUID(),
+      product: item,
+    };
+    addOrder(items);
   });
 
   /* Assemble */
