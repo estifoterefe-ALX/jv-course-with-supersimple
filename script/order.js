@@ -108,6 +108,15 @@ function createOrder(order) {
 
     const trackLink = document.createElement("a");
     trackLink.href = "tracking.html";
+    trackLink.addEventListener("click", () => {
+      sessionStorage.setItem(
+        "trackingOrderId",
+        JSON.stringify({
+          orderId: order.orderId,
+          product: product,
+        })
+      );
+    });
 
     const trackButton = document.createElement("button");
     trackButton.className = "track-package-button button-secondary";

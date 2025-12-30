@@ -61,6 +61,7 @@ export function displayPaymentSummary(summary) {
       productId: i.id,
       quantity: i.count,
       arrivedAt: i.shippingDate,
+      status: "Preparing",
     }));
 
     const items = {
