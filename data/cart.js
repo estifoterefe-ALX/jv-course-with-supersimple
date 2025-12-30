@@ -35,7 +35,12 @@ export function totalcart() {
 
 export function countUpdater(itemId, value) {
   const item = cart.find((i) => i.id === itemId);
-  if (item) item.count = Number.parseInt(value, 10) || item.count;
+  if (item) {
+    const parsed = Number.parseInt(value, 10);
+    if (!Number.isNaN(parsed)) {
+      item.count = parsed;
+    }
+  }
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 

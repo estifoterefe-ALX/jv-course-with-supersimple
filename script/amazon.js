@@ -16,6 +16,7 @@ function displayProducts(product) {
   image.className = "product-image";
   image.src = product.image;
   image.alt = product.name;
+  image.loading = "lazy";
 
   imageContainer.appendChild(image);
 
@@ -31,6 +32,8 @@ function displayProducts(product) {
   const ratingStars = document.createElement("img");
   ratingStars.className = "product-rating-stars";
   ratingStars.src = `images/ratings/rating-${product.rating.stars * 10}.png`;
+  ratingStars.alt = `${product.rating.stars} stars`;
+  ratingStars.loading = "lazy";
 
   const ratingCount = document.createElement("div");
   ratingCount.className = "product-rating-count link-primary";

@@ -69,6 +69,8 @@ function createOrder(order) {
 
     const image = document.createElement("img");
     image.src = productsById[product.productId].image;
+    image.alt = productsById[product.productId].name || "Product image";
+    image.loading = "lazy";
 
     imageContainer.appendChild(image);
 

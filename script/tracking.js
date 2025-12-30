@@ -82,8 +82,24 @@ function createOrderTracking(data) {
 }
 function displayTracking() {
   const ordersGrid = document.querySelector(".main");
-  const item = JSON.parse(sessionStorage.getItem("trackingOrderId"));
+  const itemRaw = sessionStorage.getItem("trackingOrderId");
+  if (!itemRaw) {
+    const msg = document.createElement("div");
+    msg.className = "no-tracking-message";
+    msg.textContent = "No tracking data available.";
+    ordersGrid.appendChild(msg);
+    return;
+  }
+  let item;
+  try {
+    item = JSON.parse(itemRaw);
+  } catch (e) {
+    const msg = document.createElement("div");
+    msg.className = "no-tracking-message";
+    msg.textContent = "Invalid tracking data.";
+    ordersGrid.appendChild(msg);
+    return;
+  }
   ordersGrid.appendChild(createOrderTracking(item));
-  console.log(item);
 }
 displayTracking();

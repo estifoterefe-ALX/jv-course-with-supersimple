@@ -41,7 +41,12 @@ function renderCartItem(cart, index) {
   quantity.className = "product-quantity";
 
   const quantityText = document.createElement("span");
-  quantityText.innerHTML = `Quantity: <span class="quantity-label">${cart.count}</span>`;
+  // Safely set text and nested quantity span to avoid HTML injection
+  const qtySpanInit = document.createElement("span");
+  qtySpanInit.className = "quantity-label";
+  qtySpanInit.textContent = cart.count;
+  quantityText.textContent = "Quantity: ";
+  quantityText.appendChild(qtySpanInit);
 
   const update = document.createElement("span");
   update.className = "update-quantity-link link-primary";
@@ -58,10 +63,15 @@ function renderCartItem(cart, index) {
     quantity.appendChild(save);
     save.addEventListener("click", () => {
       countUpdater(cart.id, parseInt(input.value, 10));
-      quantityText.innerHTML = `Quantity: <span class="quantity-label">${input.value}</span>`;
+      // Safely update displayed quantity
+      const qtySpan = document.createElement("span");
+      qtySpan.className = "quantity-label";
+      qtySpan.textContent = input.value;
+      quantityText.textContent = "Quantity: ";
+      quantityText.appendChild(qtySpan);
       save.remove();
       input.remove();
-      update.style.opacity = 100;
+      update.style.opacity = "1";
       document.querySelector(".return-to-home-link").innerText = totalcart();
       summary();
     });
