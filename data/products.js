@@ -484,8 +484,7 @@ async function productAPI() {
       },
     });
     const data = await response.json();
-    const product = await JSON.parse(JSON.stringify(data));
-    return product;
+    return data;
   } catch (error) {
     console.log(error);
     return [];
