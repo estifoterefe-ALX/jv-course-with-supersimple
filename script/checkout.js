@@ -198,9 +198,9 @@ function totalPrice() {
 }
 
 function shipping() {
-  let shippingCost = 0;
-  cart.forEach((item) => {
-    shippingCost += item.count * item.shipping;
-  });
+  const shippingCost = cart.reduce(
+    (acc, item) => acc + item.count * item.shipping,
+    0
+  );
   return shippingCost;
 }
