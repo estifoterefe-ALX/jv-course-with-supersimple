@@ -2,6 +2,7 @@ import { addToCart, totalcart } from "../data/cart.js";
 import { orders } from "../data/order-return.js";
 import { productsById } from "../data/products.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { formatPrice } from "./Utils/formater.js";
 document.querySelector(".cart-quantity").innerText = totalcart();
 
 function createOrder(order) {
@@ -38,7 +39,7 @@ function createOrder(order) {
     totalamount += p.totalPrice;
   });
   const orderTotalValue = document.createElement("div");
-  orderTotalValue.textContent = `$${(totalamount / 100).toFixed(2)}`;
+  orderTotalValue.textContent = formatPrice(totalamount);
 
   orderTotal.append(orderTotalLabel, orderTotalValue);
 

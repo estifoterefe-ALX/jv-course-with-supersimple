@@ -2,6 +2,7 @@ import { addOrder } from "../data/order-return.js";
 import { cart } from "../data/cart.js";
 import { productsById } from "../data/products.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { formatPrice } from "./Utils/formater.js";
 export function displayPaymentSummary(summary) {
   const container = document.createElement("div");
   container.className = "payment-summary";
@@ -26,7 +27,7 @@ export function displayPaymentSummary(summary) {
 
     const money = document.createElement("div");
     money.className = "payment-summary-money";
-    money.textContent = `$${(value / 100).toFixed(2)}`;
+    money.textContent = formatPrice(value);
 
     row.append(text, money);
     return row;

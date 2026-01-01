@@ -5,11 +5,11 @@ export const cart = (() => {
     return [];
   }
 })();
-
+const cartObj = Object.fromEntries(cart.map((i) => [i.id, i.count]));
 export function addToCart(item) {
-  const existItem = cart.find((i) => i.id === item.id);
-  if (existItem) {
-    existItem.count += item.count;
+  //const existItem = cart.find((i) => i.id === item.id);
+  if (cartObj[item.id]) {
+    cartObj[item.id] += item.count;
   } else {
     cart.push(item);
   }
@@ -26,19 +26,16 @@ export function removeFromCart(itemId, index) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 export function totalcart() {
-  let totalCart = 0;
-  cart.forEach((item) => {
-    totalCart += item.count;
-  });
+  const totalCart = cart.reduce((acc, item) => acc + item.count, 0);
   return totalCart;
 }
 
 export function countUpdater(itemId, value) {
-  const item = cart.find((i) => i.id === itemId);
-  if (item) {
+  // const item = cart.find((i) => i.id === itemId);
+  if (cartObj[itemId]) {
     const parsed = Number.parseInt(value, 10);
     if (!Number.isNaN(parsed)) {
-      item.count = parsed;
+      cartObj[itemId] = parsed;
     }
   }
   localStorage.setItem("cart", JSON.stringify(cart));

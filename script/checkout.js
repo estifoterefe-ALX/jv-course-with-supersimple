@@ -2,6 +2,7 @@ import { productsById } from "../data/products.js";
 import { cart, countUpdater, removeFromCart, totalcart } from "../data/cart.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { displayPaymentSummary } from "./summary.js";
+import { formatPrice } from "./Utils/formater.js";
 
 const cartItemsContainer = document.querySelector(".order-summary");
 document.querySelector(".return-to-home-link").innerText = totalcart();
@@ -34,7 +35,7 @@ function renderCartItem(cart, index) {
 
   const price = document.createElement("div");
   price.className = "product-price";
-  price.textContent = `$${(productsById[cart.id].priceCents / 100).toFixed(2)}`;
+  price.textContent = formatPrice(productsById[cart.id].priceCents);
 
   /* Quantity */
   const quantity = document.createElement("div");
@@ -136,7 +137,7 @@ function renderCartItem(cart, index) {
     const price = document.createElement("div");
     price.className = "delivery-option-price";
     price.textContent = `${
-      opt.price === 0 ? "Free Shipping" : `$${(opt.price / 100).toFixed(2)}`
+      opt.price === 0 ? "Free Shipping" : formatPrice(opt.price)
     }`;
     input.addEventListener("change", () => {
       cart.shipping = opt.price;

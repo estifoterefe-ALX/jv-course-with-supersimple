@@ -1,6 +1,7 @@
 import { products } from "../data/products.js";
 import { addToCart, totalcart } from "../data/cart.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { formatPrice } from "./Utils/formater.js";
 const productMainContainer = document.querySelector(".products-grid");
 const cartQuantityEl = document.querySelector(".cart-quantity");
 cartQuantityEl.innerText = totalcart();
@@ -44,7 +45,7 @@ function displayProducts(product) {
   /* Price */
   const price = document.createElement("div");
   price.className = "product-price";
-  price.textContent = `$${(product.priceCents / 100).toFixed(2)}`;
+  price.textContent = formatPrice(product.priceCents);
 
   /* Quantity selector */
   const quantityContainer = document.createElement("div");
